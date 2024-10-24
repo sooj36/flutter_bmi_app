@@ -1,8 +1,64 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 class GenderBox extends StatelessWidget {
+  GenderBox(this.isMale, this.onChanged);
+
+  bool isMale;
+
+  Void Function(double newValue) onChanged;
   @override
   Widget build(BuildContext context) {
-    return Text('GenderBox');
+    return Row(
+      children: [
+        gender(context, Icons.male, 'M A L E', isMale),
+        SizedBox(width: 8),
+        gender(context, Icons.female, 'f e m a l e', !isMale),
+      ],
+    );
+  }
+
+  Widget gender(
+    BuildContext context,
+    IconData icon,
+    String text,
+    bool selected,
+  ) {
+    return Expanded(
+      child: Container(
+        height: 150,
+        decoration: BoxDecoration(
+            border: Border.all(
+          color: Theme.of(context).dividerColor,
+        )),
+        child: Stack(
+          children: [
+            Positioned(
+              top: 10,
+              left: 10,
+              child: Opacity(
+                opacity: 0.3,
+                child: Icon(
+                  icon,
+                  size: 80,
+                ),
+              ),
+            ),
+            Positioned(
+              right: 20,
+              bottom: 20,
+              child: Opacity(
+                opacity: selected ? 1 : 0.3,
+                child: Text(
+                  text,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
